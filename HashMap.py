@@ -94,6 +94,7 @@ class HashMap:
     	return value
 
     def load(self):
+  
     	"""
         :params: none
         :return: Ratio of number of items and size limit
