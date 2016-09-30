@@ -1,2 +1,0 @@
-# KPCG
-Coding challenge
