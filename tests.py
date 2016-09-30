@@ -43,7 +43,9 @@ class TestHashMap(unittest.TestCase):
     	key = ''.join(random.choice(chars) for _ in range(self.size))
     	saved_key = key
     	value = 1000
+    	prev_size = self.hash_map.get_num_items()
     	self.assertTrue(self.hash_map.set(key, value))
+    	self.assertTrue((self.hash_map.get_num_items() - prev_size) == 1 )
     	self.assertTrue(self.hash_map.load() <= 1.0)
 
     def test_delete_invalid(self):
@@ -66,9 +68,10 @@ class TestHashMap(unittest.TestCase):
     	chars = string.ascii_uppercase + string.digits
        	key = ''.join(random.choice(chars) for _ in range(self.size))
        	self.hash_map.set(key, 10000)
+       	prev_size = self.hash_map.get_num_items()
        	self.assertTrue(self.hash_map.delete(key) == 10000)
        	self.assertTrue(self.hash_map.load() < 1.0)
-       	self.assertTrue(self.hash_map.get_num_items() == 0)
+       	self.assertTrue((prev_size - self.hash_map.get_num_items()) == 1)
 
     def test_linear_probing(self):
 
