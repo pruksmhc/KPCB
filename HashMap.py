@@ -25,8 +25,7 @@ class HashMap:
     	return (prev_hash + 1)%self._limit
 
     def find_first_free(self, key): 
-
-        if (type(key) is not str):
+        if type(key) is not str:
             return -1
         index = key.__hash__() % self._limit
         if ((self.table[index][0] is None) or (self.table[index][0]  == self.delete_value)):
@@ -42,9 +41,11 @@ class HashMap:
             else:
                 return -1 
 
+
     def find_index(self, key): 
 
         """
+        This function searches if the key is in the table
         :params: key (string) 
         :return: index of the next free space, or sapce that is 
         already given to the key using linear probing
@@ -53,18 +54,17 @@ class HashMap:
         if (type(key) is not str):
         	return -1
         index = key.__hash__() % self._limit
-        if self.table[index][0] is None or self.table[index][0] is key:
+        if self.table[index][0] is None or self.table[index][0] == key:
             return index
         else:
             next_index = self.map_hash(index)
             while (self.table[next_index][0] is not None and 
             	   self.table[next_index][0] != key and
-                   next_index != index): # hERE THE NEXT_INDEX HASNT LOOPED AROUDN TO THE first index. 
+                   next_index != index): 
                 next_index = self.map_hash(next_index)
             if self.table[next_index][0] is None or self.table[next_index][0] == key:
                 return next_index
             else:
-                 # IT HAS LOOPED THROUGH M TIMES and not found the key. 
                 return -1
 
     def set(self, key, value):

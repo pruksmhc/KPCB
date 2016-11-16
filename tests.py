@@ -60,7 +60,7 @@ class TestHashMap(unittest.TestCase):
     	''' 
     		Test deleting a valid value. Number of items should decrease back to 0
     		and the delete function should return the value
-            Check 1: Here, we check if, given 2 keys a and b in an input s.t. h(a) = h(b), 
+            Check : Here, we check if, given 2 keys a and b in an input s.t. h(a) = h(b), 
             and a is inserted before b, if a is dleeted, if b can be correctly updated.
             Check 2: When a is inserted again, it should insert back into the same position 
             it was in before if the hashmap is filled. 
@@ -80,7 +80,9 @@ class TestHashMap(unittest.TestCase):
         self.hash_map.set("9", 10000)
         self.hash_map.set("10", 10000)
        	prev_size = self.hash_map.num_items
-       	self.assertTrue(self.hash_map.delete("0") == 10000)
+        # 11 is not in the table, should return None
+       	self.assertTrue(self.hash_map.delete("11") == None)
+        self.assertTrue(self.hash_map.delete("0") == 10000)
         self.assertTrue(self.hash_map.set("12", "new val"))
         self.assertTrue(self.hash_map.set("0", "new val 2"))
         self.assertFalse(self.hash_map.load() > 1.0)
