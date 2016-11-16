@@ -9,7 +9,7 @@ class TestHashMap(unittest.TestCase):
 
     def setUp(self):
 		self.size = random.randrange(1, 200)
-		self.hash_map = HashMap(self.size)
+		self.hash_map = HashMap(10)
 
     def test_initial_state(self):
     	'''
@@ -18,7 +18,7 @@ class TestHashMap(unittest.TestCase):
     	    Number of items in map is 0
     	    Load is 0
     	'''
-        self.assertTrue(self.hash_map.get_num_items() == 0)
+        self.assertTrue(self.hash_map.num_items== 0)
         load = self.hash_map.load()
         self.assertTrue(isinstance(load, numbers.Real))
         self.assertTrue(load == float(0))
@@ -43,9 +43,9 @@ class TestHashMap(unittest.TestCase):
     	key = ''.join(random.choice(chars) for _ in range(self.size))
     	saved_key = key
     	value = 1000
-    	prev_size = self.hash_map.get_num_items()
+    	prev_size = self.hash_map.num_items
     	self.assertTrue(self.hash_map.set(key, value))
-    	self.assertTrue((self.hash_map.get_num_items() - prev_size) == 1 )
+    	self.assertTrue((self.hash_map.num_items - prev_size) == 1 )
     	self.assertTrue(self.hash_map.load() <= 1.0)
 
     def test_delete_invalid(self):
@@ -60,16 +60,30 @@ class TestHashMap(unittest.TestCase):
     	''' 
     		Test deleting a valid value. Number of items should decrease back to 0
     		and the delete function should return the value
+            Check 1: Here, we check if, given 2 keys a and b in an input s.t. h(a) = h(b), 
+            and a is inserted before b, if a is dleeted, if b can be correctly updated.
+            Check 2: When a is inserted again, it should insert back into the same position 
+            it was in before if the hashmap is filled. 
     		Load should stay less than 1.0
     	'''
-    	curr_size = self.hash_map.get_num_items()
+    	curr_size = self.hash_map.num_items
     	chars = string.ascii_uppercase + string.digits
-       	key = ''.join(random.choice(chars) for _ in range(self.size))
-       	self.hash_map.set(key, 10000)
-       	prev_size = self.hash_map.get_num_items()
-       	self.assertTrue(self.hash_map.delete(key) == 10000)
-       	self.assertTrue(self.hash_map.load() < 1.0)
-       	self.assertTrue((prev_size - self.hash_map.get_num_items()) == 1)
+       	self.hash_map.set("0", 10000)
+        self.hash_map.set("12", 20000)
+        self.hash_map.set("2", 10000)
+        self.hash_map.set("3", 10000)
+        self.hash_map.set("4", 10000)
+        self.hash_map.set("5", 10000)
+        self.hash_map.set("6", 10000)
+        self.hash_map.set("7", 10000)
+        self.hash_map.set("8", 10000)
+        self.hash_map.set("9", 10000)
+        self.hash_map.set("10", 10000)
+       	prev_size = self.hash_map.num_items
+       	self.assertTrue(self.hash_map.delete("0") == 10000)
+        self.assertTrue(self.hash_map.set("12", "new val"))
+        self.assertTrue(self.hash_map.set("0", "new val 2"))
+        self.assertFalse(self.hash_map.load() > 1.0)
 
     def test_linear_probing(self):
     	''' 
